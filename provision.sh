@@ -22,34 +22,30 @@ function provision {
 
 # .bash_profile
 provision 'base_profile'
-
 # Apache
 provision 'apache'
-
 # MySQL
 provision 'mysql'
-
 # PHP
 provision 'php'
-
-# PEAR
-provision 'pear'
-
-# git
-provision 'git'
-
 # PhpMyAdmin
 provision 'phpmyadmin'
-
+# Composer
+provision 'composer'
+# PHPUnit
+provision 'phpunit'
+# Phinx
+provision 'phinx'
+# PEAR
+provision 'pear'
+# git
+provision 'git'
 # Java
 provision 'java'
-
 # ElasticSearch
 #rpm --import https://packages.elasticsearch.org/GPG-KEY-elasticsearch
 #provision 'elasticsearch'
-
 # Kibana
 #provision 'kibana' #TODO - This needs finishing
-
 # LogStash
 #provision 'logstash'
