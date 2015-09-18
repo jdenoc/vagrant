@@ -5,7 +5,7 @@
   - Install: `vagrant plugin install vagrant-hostsupdater`
   - Uninstall: `vagrant plugin uninstall vagrant-hostsupdater`
 - vagrant-vbguest
-  - **Warning**: Make sure this isn't installed until after everything has already been setup
+  - **Warning**: Make sure this isn't installed until after everything has already been setup. Installing before hand can lead to mounting of local directory issues.
   - Description: Used to keep your VirtualBox Guest Additions up to date
   - Install: `vagrant plugin install vagrant-vbguest`
   - Uninstall: `vagrant plugin uninstall vagrant-vbguest`
