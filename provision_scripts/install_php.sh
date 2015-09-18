@@ -1,12 +1,5 @@
 #!/usr/bin/env bash
 
-LINE_BREAK="#####################"
-USER_HOME="/home/vagrant"
-
-echo $LINE_BREAK
-echo "Installing PHP"
-echo $LINE_BREAK
-
 rpm -Uvh https://mirror.webtatic.com/yum/el6/latest.rpm
 yum install -y php56w php56w-opcache php56w-mcrypt php56w-mysql php56w-cli php56w-common php56w-pdo php56w-pear php56w-pecl-xdebug php56w-soap php56w-ldap php56w-devel libssh2-devel
 
@@ -39,6 +32,7 @@ echo "extension=/usr/lib64/php/modules/ssh2.so" > $SSH2_INI
 service httpd restart
 
 # Install composer
+USER_HOME="/home/vagrant"
 if [ ! -f /usr/local/bin/composer ]; then
     curl -sS https://getcomposer.org/installer | php
     mv composer.phar /usr/local/bin/composer
@@ -57,7 +51,3 @@ mv composer.* $USER_HOME/.phinx
 echo "# Add phinx to PATH" >> $USER_HOME/.bash_profile
 echo 'export PATH='$USER_HOME'/.phinx/vendor/bin/:$PATH' >> $USER_HOME/.bash_profile
 mkdir -p $MIGRATION_DIR
-
-echo $LINE_BREAK
-echo "PHP complete!!!"
-echo $LINE_BREAK

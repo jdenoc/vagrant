@@ -1,41 +1,55 @@
 #!/usr/bin/env bash
 
-SCRIPTS="/vagrant/provision_scripts"
 yum -y update
 yum update -y kernel*
 yum install -y epel-release
 yum install -y vim-X11 vim-common vim-enhanced vim-minimal
 
+function provision {
+    LINE_BREAK="#####################"
+
+    echo $LINE_BREAK
+    echo "Installing "$1
+    echo $LINE_BREAK
+
+    sh /vagrant/provision_scripts/install_$1.sh
+
+    echo $LINE_BREAK
+    echo $1" complete!!!"
+    echo $LINE_BREAK
+    echo ""
+}
+
 # .bash_profile
-$SCRIPTS/install_base_profile.sh
+provision 'base_profile'
 
 # Apache
-$SCRIPTS/install_apache.sh
+provision 'apache'
 
 # MySQL
-$SCRIPTS/install_mysql.sh
+provision 'mysql'
 
 # PHP
-$SCRIPTS/install_php.sh
+provision 'php'
 
 # PEAR
-$SCRIPTS/install_pear.sh
+provision 'pear'
 
 # git
-$SCRIPTS/install_git.sh
+provision 'git'
 
 # PhpMyAdmin
-$SCRIPTS/install_phpmyadmin.sh
+provision 'phpmyadmin'
 
 # Java
-$SCRIPTS/install_java.sh
+provision 'java'
 
 # ElasticSearch
 #rpm --import https://packages.elasticsearch.org/GPG-KEY-elasticsearch
-#$SCRIPTS/install_elasticsearch.sh
+#provision 'elasticsearch'
 
 # Kibana
-#$SCRIPTS/install_kibana.sh #TODO - This needs finishing
+#provision 'kibana' #TODO - This needs finishing
 
 # LogStash
-#$SCRIPTS/install_logstash.sh
+#provision 'logstash'

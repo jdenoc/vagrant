@@ -1,17 +1,10 @@
 #!/usr/bin/env bash
 
-LINE_BREAK="#####################"
-KIBANA_SERVICE="/etc/init.d/kibana"
-KIBANA_YML="/opt/kibana/config/kibana.yml"
-
-echo $LINE_BREAK
-echo "Installing Kibana"
-echo $LINE_BREAK
-
 mkdir -p /opt/kibana
 wget -O /tmp/kibana-4.1.1-linux-x86.tar.gz https://download.elastic.co/kibana/kibana/kibana-4.1.1-linux-x86.tar.gz
 tar xf /tmp/kibana-*.tar.gz -C /tmp
 mv -f /tmp/kibana-*/* /opt/kibana
+KIBANA_YML="/opt/kibana/config/kibana.yml"
 sed -i_bak "s/host\: .*/host: 192.168.33.10/" $KIBANA_YML
 sed "s/elasticsearch_url\: .*/elasticsearch_url: \"http://logs.local\"/" $KIBANA_YML > /tmp/kibana.yml; mv /tmp/kibana.yml $KIBANA_YML
 sed "s/elasticsearch_preserve_host\: .*/elasticsearch_preserve_host: 192.168.33.111/" $KIBANA_YML > /tmp/kibana.yml; mv /tmp/kibana.yml $KIBANA_YML
@@ -23,6 +16,7 @@ mv /opt/kibana/src/public/index.html /opt/kibana/src/public/index.html_bak
 mv -f /opt/kibana/src/public/index.html_bak /opt/kibana/src/public/index.html
 
 # Create Kibana service
+KIBANA_SERVICE="/etc/init.d/kibana"
 echo "#!/bin/bash" >> $KIBANA_SERVICE
 echo "PATH=/sbin:/usr/sbin:/bin:/usr/bin" >> $KIBANA_SERVICE
 echo "DESC=\"Kibana 4\"" >> $KIBANA_SERVICE
@@ -117,7 +111,3 @@ echo ":" >> $KIBANA_SERVICE
 chmod +x $KIBANA_SERVICE
 chkconfig kibana on
 service kibana start
-
-echo $LINE_BREAK
-echo "Kibana complete!!!"
-echo $LINE_BREAK

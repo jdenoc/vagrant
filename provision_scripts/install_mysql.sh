@@ -1,11 +1,5 @@
 #!/usr/bin/env bash
 
-LINE_BREAK="#####################"
-
-echo $LINE_BREAK
-echo "Installing MySQL"
-echo $LINE_BREAK
-
 yum install -y mysql-server
 
 # Allow mysql to be accessible outside of vagrant
@@ -22,7 +16,3 @@ mysql -u root -e "GRANT ALL PRIVILEGES ON *.* TO 'vagrant'@'localhost';"
 mysql -u root -e "GRANT ALL PRIVILEGES ON *.* TO 'vagrant'@'127.0.0.1';"
 mysql -u root -e "GRANT ALL PRIVILEGES ON *.* TO 'vagrant'@'vagrant.local';"
 mysql -u root -e "FLUSH PRIVILEGES;"
-
-echo $LINE_BREAK
-echo "MySQL complete!!!"
-echo $LINE_BREAK

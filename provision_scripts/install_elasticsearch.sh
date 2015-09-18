@@ -1,11 +1,6 @@
 #!/usr/bin/env bash
 
-LINE_BREAK="#####################"
 ELASTICSEARCH_REPO="/etc/yum.repos.d/elasticsearch.repo"
-
-echo $LINE_BREAK
-echo "Installing Elasticsearch"
-echo $LINE_BREAK
 
 # Write ElasticSearch repo info
 echo "[elasticsearch-1.4]" >> $ELASTICSEARCH_REPO
@@ -23,7 +18,3 @@ echo "http.cors.allow-origin: \"*\"" >> /etc/elasticsearch/elasticsearch.yml
 
 chkconfig elasticsearch on
 service elasticsearch start
-
-echo $LINE_BREAK
-echo "Elasticsearch complete!!!"
-echo $LINE_BREAK

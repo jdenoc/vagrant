@@ -1,12 +1,7 @@
 #!/usr/bin/env bash
 
-LINE_BREAK="#####################"
 CONFIG_FILE="/etc/phpMyAdmin/config.inc.php"
 TMP_CONFIG="/tmp/phpMyAdmin.config.php"
-
-echo $LINE_BREAK
-echo "Installing PhpMyAdmin"
-echo $LINE_BREAK
 
 yum install -y phpmyadmin
 
@@ -22,7 +17,3 @@ sed "/\['AllowNoPassword'\]/ { n; d; }" $CONFIG_FILE > $TMP_CONFIG; mv -f $TMP_C
 
 rm -rf /etc/httpd/conf.d/phpMyAdmin.conf 	# Delete the apache conf file created at install
 /vagrant/create_domain.sh -d db.local -f /usr/share/phpMyAdmin --no-index
-
-echo $LINE_BREAK
-echo "PhpMyAdmin complete!!!"
-echo $LINE_BREAK
