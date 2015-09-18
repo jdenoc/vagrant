@@ -30,24 +30,3 @@ echo "extension=/usr/lib64/php/modules/ssh2.so" > $SSH2_INI
 
 # Restart apache after updating php config files
 service httpd restart
-
-# Install composer
-USER_HOME="/home/vagrant"
-if [ ! -f /usr/local/bin/composer ]; then
-    curl -sS https://getcomposer.org/installer | php
-    mv composer.phar /usr/local/bin/composer
-    echo "" >> $USER_HOME/.bash_profile
-    echo "# Add composer to PATH" >> $USER_HOME/.bash_profile
-    echo 'export PATH='$USER_HOME'/.composer/vendor/bin:$PATH' >> $USER_HOME/.bash_profile
-fi
-
-# Install Phinx
-MIGRATION_DIR="/usr/share/php/migrations"
-mkdir -p $USER_HOME/.phinx
-php /usr/local/bin/composer require robmorgan/phinx
-php /usr/local/bin/composer install --no-dev
-mv vendor $USER_HOME/.phinx
-mv composer.* $USER_HOME/.phinx
-echo "# Add phinx to PATH" >> $USER_HOME/.bash_profile
-echo 'export PATH='$USER_HOME'/.phinx/vendor/bin/:$PATH' >> $USER_HOME/.bash_profile
-mkdir -p $MIGRATION_DIR
