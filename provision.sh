@@ -12,7 +12,7 @@ function provision {
     echo "Installing "$1
     echo $LINE_BREAK
 
-    sh /vagrant/provision_scripts/install_$1.sh
+    sh /vagrant/provision.d/install_$1.sh
 
     echo $LINE_BREAK
     echo $1" complete!!!"
