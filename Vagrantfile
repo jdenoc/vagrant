@@ -1,6 +1,6 @@
 Vagrant.configure(2) do |config|
   # VM setup
-  config.vm.box = "chef/centos-6.6"
+  config.vm.box = "bento/centos-6.7"
   config.vm.provider "virtualbox" do |vb|
       vb.gui = false   # Don't display the VirtualBox GUI when booting the machine
       vb.memory = 2048 # Customize the amount of memory on the VM
