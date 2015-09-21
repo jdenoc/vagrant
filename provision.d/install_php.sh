@@ -26,7 +26,7 @@ echo "xdebug.remote_autostart=1 ;this will allow xdebug to auto-connect" >> $XDE
 pecl install -f ssh2
 SSH2_INI="/etc/php.d/ssh2.ini"
 touch $SSH2_INI # create empty file
-echo "extension=/usr/lib64/php/modules/ssh2.so" > $SSH2_INI
+echo "extension=ssh2.so" > $SSH2_INI
 
 # Restart apache after updating php config files
 service httpd restart
