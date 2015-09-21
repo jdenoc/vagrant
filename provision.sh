@@ -32,6 +32,7 @@ provision 'php'
 provision 'phpmyadmin'
 # Composer
 provision 'composer'
+export COMPOSER_HOME="/home/vagrant/.composer"
 # PHPUnit
 provision 'phpunit'
 # Phinx
