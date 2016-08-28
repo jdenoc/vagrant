@@ -8,3 +8,6 @@ echo 'export PS1="\w : "' >> $USER_HOME/.bash_profile
 echo 'export SUDO_PS1="\w : "' >> $USER_HOME/.bash_profile
 echo '' >> $USER_HOME/.bash_profile
 echo "alias ls='ls -Fal --color=auto'" >> $USER_HOME/.bash_profile
+
+touch $USER_HOME/.vimrc
+echo 'syntax on' >> $USER_HOME/.vimrc
