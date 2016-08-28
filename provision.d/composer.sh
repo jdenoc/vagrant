@@ -9,3 +9,6 @@ mkdir -p $USER_HOME/.composer
 echo "" >> $USER_HOME/.bash_profile
 echo "# Add composer to PATH" >> $USER_HOME/.bash_profile
 echo 'export PATH='$USER_HOME'/.composer/vendor/bin:$PATH' >> $USER_HOME/.bash_profile
+
+# Assign ownership of the ~/.composer directory to the vagrant user
+chown vagrant:vagrant -R $USER_HOME/.composer
