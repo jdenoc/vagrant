@@ -3,15 +3,14 @@
 BUILD_INDEX=true;
 DOMAIN="";
 DIRECTORY="";
-VHOST_DIRECTORY=false;
 
 function usage_alert {
-   echo "Usage: $0 [-d|--domain] <Domain> [-f|--folder] <DocumentRoot> [--no-index] [--vhost-directory]";
+   echo "Usage: $0 [-d|--domain] <Domain> [-f|--folder] <DocumentRoot> [--no-index]";
    exit;
 }
 
 # input checking
-if [[ $# < 1 ]]; then #make sure that arguments were passed
+if [[ $# < 1 ]]; then # make sure that arguments were passed
     usage_alert
 fi
 
@@ -21,23 +20,19 @@ do
     case $i in
         "--no-index")
             BUILD_INDEX=false;
-            shift #move beyond argument $1
+            shift # move beyond argument $1
             ;;
         "-d"|"--domain")
             DOMAIN="$2";
-            shift #move beyond argument $1
-            shift #move beyond argument $2
+            shift # move beyond argument $1
+            shift # move beyond argument $2
             ;;
         "-f"|"--folder")
             DIRECTORY="$2";
-            shift #move beyond argument $1
-            shift #move beyond argument $2
+            shift # move beyond argument $1
+            shift # move beyond argument $2
             ;;
-        "--vhost-directory")
-            VHOST_DIRECTORY=true
-            shift #move beyond argument $1
-            ;;
-        *|"") #unrecognised parameters - catch all
+        *|"") # unrecognised parameters - catch all
             usage_alert
     esac
 done
@@ -54,9 +49,10 @@ elif [[ ! -d "$DIRECTORY" ]]; then
     usage_alert
 fi
 
-
 # write to /etc/hosts
 echo "127.0.0.1    $DOMAIN" >> /etc/hosts
+# Write new domain to the hosts.txt file
+echo $DOMAIN >> /vagrant/hosts.txt
 
 # Create a log directory
 LOG_DIR="/var/log/httpd/$DOMAIN"
@@ -66,7 +62,8 @@ if [ ! -d $LOG_DIR ]; then
 fi;
 
 # Write a vhost entry
-VHOST_FILE="/etc/httpd/conf.d/vhost-$DOMAIN.conf"
+VHOST_FILE="/etc/httpd/vhosts.d/$DOMAIN.conf"
+touch $VHOST_FILE
 echo "# file: $VHOST_FILE" >> $VHOST_FILE
 echo "# domain: $DOMAIN" >> $VHOST_FILE
 echo "<VirtualHost *:80>" >> $VHOST_FILE
@@ -76,13 +73,11 @@ echo "    ServerName $DOMAIN" >> $VHOST_FILE
 echo "    ServerAlias *.$DOMAIN" >> $VHOST_FILE
 echo "    ErrorLog \"$LOG_DIR/apache_error.log\"" >> $VHOST_FILE
 echo "    CustomLog \"$LOG_DIR/apache_access.log\" common" >> $VHOST_FILE
-if $VHOST_DIRECTORY; then
-    echo "    <Directory \"$DIRECTORY\">" >> $VHOST_FILE
-    echo "        Options Indexes FollowSymLinks" >> $VHOST_FILE
-    echo "        AllowOverride all" >> $VHOST_FILE
-    echo "        Allow from all" >> $VHOST_FILE
-    echo "    </Directory>" >> $VHOST_FILE
-fi
+echo "    <Directory \"$DIRECTORY\">" >> $VHOST_FILE
+echo "        Options Indexes FollowSymLinks" >> $VHOST_FILE
+echo "        AllowOverride all" >> $VHOST_FILE
+echo "        Require all granted" >> $VHOST_FILE
+echo "    </Directory>" >> $VHOST_FILE
 echo "</VirtualHost>" >> $VHOST_FILE
 
 if $BUILD_INDEX; then
@@ -94,7 +89,7 @@ if $BUILD_INDEX; then
 fi
 
 # Restart apache
-service httpd restart
+systemctl restart httpd.service
 
 # Display reminder
-echo "Don't forget to update your VagrantFile..."
+echo "Don't forget to reload Vagrant..."
