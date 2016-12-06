@@ -20,12 +20,18 @@ if [ ! -d $PHPD_DIR ]; then
 fi
 
 # Update xdebug.ini
-XDEBUG_INI="/etc/php.d/xdebug.ini"
+XDEBUG_INI="$PHPD_DIR/xdebug.ini"
 touch $XDEBUG_INI
-echo "xdebug.remote_enable=1" >> $XDEBUG_INI
-echo "xdebug.remote_port=9000" >> $XDEBUG_INI
 echo "xdebug.idekey = \"vagrant\"" >> $XDEBUG_INI
-echo "xdebug.remote_autostart=1 ;this will allow xdebug to auto-connect" >> $XDEBUG_INI
+echo "xdebug.remote_enable=1" >> $XDEBUG_INI
+echo "xdebug.remote_connect_back=1 ;xdebug will try to connect to the client that made the HTTP request" >> $XDEBUG_INI
+echo "xdebug.remote_autostart=1 ;xdebug will always attempt to start a remote debugging session and try to connect to a client" >> $XDEBUG_INI
+
+# Assign appropriate permissions to the php error log
+ERROR_LOG="/var/log/php_errors.log"
+touch $ERROR_LOG
+chgrp apache $ERROR_LOG
+chmod 774 $ERROR_LOG
 
 # Restart apache after updating php config files
 systemctl restart httpd   # restart apache
