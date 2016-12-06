@@ -26,6 +26,12 @@ fi
 systemctl enable httpd.service  # make sure apache starts at boot
 systemctl start httpd.service   # start apache
 
+# Assign appropriate permissions to /var/log/httpd direcory
+LOG_DIR="/var/log/httpd"
+mkdir -p $LOG_DIR
+chgrp apache -R $LOG_DIR
+chmod 774 -R $LOG_DIR
+
 # Create server vhost
 WEB_ROOT=/var/www/html
 /vagrant/create_domain.sh -d jdenoc.local -f $WEB_ROOT
