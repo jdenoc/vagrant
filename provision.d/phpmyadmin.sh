@@ -16,4 +16,4 @@ sed "s/\['AllowNoPassword'\].*/\['AllowNoPassword'\] = TRUE;/" $CONFIG_FILE > $T
 sed "/\['AllowNoPassword'\]/ { n; d; }" $CONFIG_FILE > $TMP_CONFIG; mv -f $TMP_CONFIG $CONFIG_FILE # deletes line directly after ['AllowNoPassword'] is found
 
 rm -rf /etc/httpd/conf.d/phpMyAdmin.conf 	# Delete the apache conf file created at install
-/vagrant/create_domain.sh -d db.local -f /usr/share/phpMyAdmin --no-index
+/vagrant/create_domain.sh -d db.jdenoc.local -f /usr/share/phpMyAdmin --no-index
